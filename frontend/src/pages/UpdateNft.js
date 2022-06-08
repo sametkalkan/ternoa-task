@@ -69,6 +69,7 @@ function Home() {
 		<div className="update-nft-container">
 			{
 				nft && <NftCard image={image === null ? nft.image : image}
+								walletAddress={nft.ownerId.walletAddress}
 								title={title === null ? nft.title : title}
 								description={description === null ? nft.description : description}
 								price={price === null ? nft.price : price}/>

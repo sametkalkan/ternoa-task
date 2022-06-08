@@ -1,0 +1,44 @@
+
+.home-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 90% !important;
+    margin: 0 auto !important;
+    gap: 20px !important;
+    margin-top: 20px !important;
+}
+
+
+.update-nft-container {
+    margin-top: 20px;
+    display: flex !important;
+    align-items: center !important;
+    gap: 30px !important;
+    justify-content: center !important;
+}
+
+.update-form-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 30px !important;
+}
+
+.update-button-container {
+    display: flex !important;
+    gap: 20px !important;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+
+.please-login-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 85px;
+    font-size: 33px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font-weight: 100;
+}

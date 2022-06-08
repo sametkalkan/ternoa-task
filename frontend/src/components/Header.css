@@ -1,0 +1,31 @@
+
+.header-right-side {
+    display: flex;
+    gap: 15px;
+}
+
+.address-box {
+    font-size: 16px !important;
+    display: flex;
+    align-items: center;
+}
+
+.MuiTextField-root {
+    margin: 0 !important;
+}
+
+.MuiTextField-root input {
+    padding: 8px;
+}
+
+.MuiTextField-root label {
+    top: -7px;
+}
+
+.logo-container {
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 7px;
+}

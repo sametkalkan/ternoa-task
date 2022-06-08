@@ -41,4 +41,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+app.all('/*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Request-Headers', '*');
+  res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Headers, x-auth-token, x-l10n-locale, Cache-Control, timeout'
+  );
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  next();
+});
 module.exports = app;

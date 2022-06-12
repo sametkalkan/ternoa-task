@@ -1,6 +1,4 @@
-import {useEffect, useState} from 'react';
-import Web3 from 'web3';
-import {BrowserRouter, Redirect, Switch, Route} from "react-router-dom";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import MyNfts from "./pages/MyNfts";

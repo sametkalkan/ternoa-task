@@ -1,10 +1,8 @@
 import {useEffect, useState} from 'react';
 import {NftServices} from '../services/NftService';
-import {styled} from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
 import NftCard from "../components/NftCard";
 import {useParams} from "react-router-dom";
-import {Box, Button, InputAdornment, OutlinedInput, TextField, Input} from "@mui/material";
+import {Box, Button, TextField, Input} from "@mui/material";
 import "./Home.css";
 function Home() {
 	const [image, setImage] = useState(null);
@@ -62,7 +60,7 @@ function Home() {
 
 		reader.onloadend = function (e) {
 			setImage(reader.result);
-		}.bind(this);
+		};
 	};
 
 	return (

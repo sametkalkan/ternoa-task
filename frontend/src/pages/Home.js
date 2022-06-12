@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {NftServices} from '../services/NftService';
-import {styled} from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import NftCard from "../components/NftCard";
 import "./Home.css";

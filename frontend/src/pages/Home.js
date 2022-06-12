@@ -11,7 +11,6 @@ function Home() {
 	useEffect(() => {
 		NftServices.getNfts(undefined, 0, 20).then(res => {
 			setNfts(res.data.data);
-			console.log(res.data.data);
 		}).catch(err => {
 			console.error(err);
 		});

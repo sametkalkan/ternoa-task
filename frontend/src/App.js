@@ -8,12 +8,9 @@ import UpdateNft from "./pages/UpdateNft";
 import CreateNft from "./pages/CreateNft";
 
 function App() {
-	const [loggedIn, setLoggedIn] = useState(
-		localStorage.getItem('x-auth-token') ? true : false
-	);
 	return (
 		<BrowserRouter>
-			<Header loggedIn={loggedIn}/>
+			<Header/>
 			<Switch>
 				<Route exact path="/">
 					<Home/>
@@ -21,11 +18,11 @@ function App() {
 				<Route exact path="/my-nfts">
 					<MyNfts/>
 				</Route>
-				<Route exact path="/update/:id" >
-					<UpdateNft />
+				<Route exact path="/update/:id">
+					<UpdateNft/>
 				</Route>
-				<Route exact path="/create" >
-					<CreateNft />
+				<Route exact path="/create">
+					<CreateNft/>
 				</Route>
 			</Switch>
 		</BrowserRouter>

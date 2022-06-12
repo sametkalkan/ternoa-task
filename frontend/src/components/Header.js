@@ -8,13 +8,13 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import {MenuItem} from "@mui/material";
+import {MenuItem, Modal} from "@mui/material";
 import Menu from '@mui/material/Menu';
 import Web3 from "web3";
 import {UserServices} from "../services/UserService";
 import "./Header.css"
+import CustomModal from "./CustomModal";
 
-const web3 = new Web3(window.web3.currentProvider);
 const ProfileBox = ({web3Data, handleConnect, handleLogout}) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const history = useHistory();
@@ -99,35 +99,46 @@ const ProfileBox = ({web3Data, handleConnect, handleLogout}) => {
 	)
 }
 
-const Header = ({
-					loggedIn
-				}) => {
-
+const Header = () => {
+	const [web3, setWeb3] = useState(null);
+	const [showModal, setShowModal] = useState(false);
 	const [web3Data, setWeb3Data] = useState({isLoggedIn: false, address: null, balance: 0});
 	const history = useHistory();
 
 	useEffect(() => {
-		UserServices.getUserInfo().then(async resp => {
-			if (resp.data.status === false) {
-				await handleLogout();
-			} else {
-				const accounts = await web3.eth.getAccounts();
-				if (accounts[0].toLowerCase() !== resp.data.data.walletAddress.toLowerCase()) {
+		if (localStorage.getItem("x-auth-token") !== null) {
+			UserServices.getUserInfo().then(async resp => {
+				if (resp.data.status === false) {
 					await handleLogout();
 				} else {
-					web3.eth.getBalance(resp.data.data.walletAddress).then(resp2 => {
-						const accountBalance = Number(web3.utils.fromWei(resp2))
-							.toLocaleString(undefined, 2);
-						setWeb3Data({isLoggedIn: true, address: resp.data.data.walletAddress, balance: accountBalance});
-					})
+					const accounts = await web3.eth.getAccounts();
+					if (accounts[0].toLowerCase() !== resp.data.data.walletAddress.toLowerCase()) {
+						await handleLogout();
+					} else {
+						web3.eth.getBalance(resp.data.data.walletAddress).then(resp2 => {
+							const accountBalance = Number(web3.utils.fromWei(resp2))
+								.toLocaleString(undefined, 2);
+							setWeb3Data({
+								isLoggedIn: true,
+								address: resp.data.data.walletAddress,
+								balance: accountBalance
+							});
+						})
+					}
 				}
-			}
-		}).catch(err => {
-			localStorage.clear();
-		});
+			}).catch(err => {
+				localStorage.clear();
+			})
+		}
 	}, [])
 
 	const handleConnect = async () => {
+		if (window.web3 !== undefined) {
+			setWeb3(new Web3(window.web3.currentProvider));
+		} else {
+			setShowModal(true);
+			return;
+		}
 		const chainId = await web3.eth.net.getId();
 		const envChainId = parseInt(process.env.REACT_APP_CHAIN_ID);  // rinkeby
 		const envChainIdHex = "0x" + envChainId.toString(16);
@@ -150,7 +161,7 @@ const Header = ({
 
 		const account = await web3.eth.getAccounts();
 		const signature = await web3.eth.personal.sign(
-			'2', // gelen kullanici bununla gelecek al
+			'2',
 			account[0]
 		);
 
@@ -162,7 +173,7 @@ const Header = ({
 			localStorage.setItem("id", data.id);
 			localStorage.setItem("walletAddress", data.walletAddress);
 			setWeb3Data({isLoggedIn: true, address: account[0], balance: accountBalance});
-			// window.location.reload();
+			window.location.reload();
 		}).catch(err => {
 			console.log("err: ", err)
 		});
@@ -173,8 +184,12 @@ const Header = ({
 		localStorage.clear();
 		history.push("/");
 	}
+	const handleModalClose = async () => {
+		setShowModal(false);
+	}
 	return (
 		<Box>
+			<CustomModal showModal={showModal} handleClose={handleModalClose} title={"Metamask"} description={"Please install metamask"}/>
 			<ProfileBox web3Data={web3Data} handleConnect={handleConnect} handleLogout={handleLogout}/>
 		</Box>
 	)
